@@ -106,3 +106,19 @@ class A private constructor(){
 val instance = my_class()
 ```
 
+## data class
+
+- 데이터만 표현하기 위한 class
+- 프로퍼티에 대한 메소드를 자동으로 지원
+- toString(), hashCode(), equals(), copy()
+
+```kotlin
+data class A (val B: type){
+}
+```
+
+- data class의 생성자는 1개 이상의 프로퍼티를 선언해야됨
+- 생성자는 val나 var로 선언해야됨
+- 보안(abstract,open,sealed,inner)등은 불일 수 없음
+- 상속불가
+
