@@ -1,5 +1,6 @@
 # Higher-Order Function
-- 함수를 변수로 넘겨주거나 반환하는 것
+- 함수를 변수로 넘겨주거나 반환하는 함수
+- 말그대로 함수위의 고위함수
 
 ```kotlin
 fun print(body: () -> String) {
