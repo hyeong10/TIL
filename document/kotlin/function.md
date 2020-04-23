@@ -66,13 +66,16 @@ fun default_ex2(x: Int, y: Int = 2): Int {
   return x + y
 }
 // default_ex2(1) -> 3
+// default_ex2(x=1) -> 3
 // default_ex2(1,3) -> 4
+
 
 fun default_ex3(x: Int = 2, y: Int): Int {
   return x + y
 }
 // default_ex3(1,3) -> 4
 // default_ex3(1) -> ERROR
+// default_ex3(y=1) -> 3
 
 fun default_ex4(x: Int, y: Int = 2, z: Int = 3): Int {
   return x + y + z
@@ -80,6 +83,7 @@ fun default_ex4(x: Int, y: Int = 2, z: Int = 3): Int {
 // defalut_ex4(1) -> 6
 // default_ex4(1,1) -> 5
 // default_ex4(1,1,1) -> 3
+// default_ex4(1,z=1) -> 4
 
 fun default_ex5(x: Int = 2, y: Int, z: Int = 3): Int {
   return x + y + z
@@ -87,6 +91,7 @@ fun default_ex5(x: Int = 2, y: Int, z: Int = 3): Int {
 // default_ex5(1) -> ERROR
 // default_ex5(1,2) -> 6
 // default_ex5(1,2,1) -> 4
+// default_ex5(y=1) -> 6
 
 fun default_ex6(x: Int, y: Int = 2, z: Int): Int {
   return x+ y + z
@@ -94,5 +99,6 @@ fun default_ex6(x: Int, y: Int = 2, z: Int): Int {
 // default_ex6(1) -> ERROR
 // default_ex6(1,2) -> ERROR
 // default_ex6(1,2,3) -> 6
+// default_ex6(x=1,z=1) -> 4
 
 ```
