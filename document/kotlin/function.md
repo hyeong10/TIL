@@ -101,4 +101,6 @@ fun default_ex6(x: Int, y: Int = 2, z: Int): Int {
 // default_ex6(1,2,3) -> 6
 // default_ex6(x=1,z=1) -> 4
 
+// 왠만하면 Default값이 없는 variable을 앞으로 두자!
+
 ```
