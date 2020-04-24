@@ -143,6 +143,8 @@ fun #FunctionName(vararg #VariableName: #VariableType, ...): #ReturnType {
   ...
 }
 
+*/
+
 fun varargs_ex1(vararg x: Int): Int {
 	return x.component1()
 }
@@ -150,4 +152,4 @@ fun varargs_ex1(vararg x: Int): Int {
 fun <T> varargs_ex2(vararg x: T): T {
 	return x.component1()
 }
-*/
+```
