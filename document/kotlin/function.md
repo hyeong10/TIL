@@ -153,3 +153,51 @@ fun <T> varargs_ex2(vararg x: T): T {
 	return x.component1()
 }
 ```
+
+```kotlin
+/*
+
+infix notation
+
+infix fun #Type.#FunctionName(#Variable: #VariableType): #ReturnType {
+	...
+}
+
+or
+
+class #ClassName {
+	infix fun #FunctionName(#Variable: #VariableType): #ReturnType {
+		...
+	}
+}
+
+*/
+
+infix fun Int.infix_ex1(x: Int): Int {
+	return this + x
+}
+// 2.infix_ex1(4) -> 6
+// 2 infix_ex1 4 -> 6
+// 2.infix_ex1(4*2) -> 10
+// 2 infix_ex1 4*2 -> 10
+
+infix fun String.infix_ex2(x: String): String = this + x
+// "Hell".infix_ex2("o") -> "Hello"
+// "Wor" infix_ex2 "ld" -> "World"
+
+class sample {
+    infix fun infix_ex3(x: Int): Int = x*x
+    fun build() {
+        print(this infix_ex3 2)
+	print(this.infix_ex3(2))
+	print(infix_ex3(2))
+	// infix_ex3 2 -> ERROR, Don't doing this
+    }
+}
+// sample().infix_ex3(2) -> 4
+// sample().build() -> 444
+
+// Member Function이나 Extension Function만 가능하다
+// Parameter는 하나만 받는다
+// Vararg와 Default는 사용할 수 없다
+```
