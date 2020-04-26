@@ -201,3 +201,46 @@ class sample {
 // Parameter는 하나만 받는다
 // Vararg와 Default는 사용할 수 없다
 ```
+
+```kotlin
+/*
+
+Generic Function
+
+fun <T> #FunctionName(#VariableName: T): #ReturnType {
+	...
+}
+
+fun <T1, ...> #FunctionName(#VariableName: T1, ...): #ReturnType {
+	...
+}
+
+*/
+
+fun <T> generic_ex1(item: T): T {
+	return item
+}
+// generic_ex1(1) -> 1
+// generic_ex1("Hello World") -> "Hello World"
+
+fun <hyeong> generic_ex2(item: hyeong): hyeong {
+	return item
+}
+// generic_ex2(1) -> 1
+// generic_ex2("Hello World") -> "Hello World"
+
+fun <T1,T2> generic_ex3(item1: T1, item2: T2): T1 {
+    	return item1
+}
+// generic_ex3(1,2) -> 1
+// generic_ex3("Hello World",2) -> Hello World
+
+fun <T1,T2> generic_ex4(item: T1): T1 {
+	return item
+}
+// generic_ex4(1) -> ERROR
+// generic_ex4(1,2) -> ERROR
+// generic_ex4<Int,Any>(1) -> 1
+// generic_ex4<String,Int>("Hello World") -> Hello World
+
+```
