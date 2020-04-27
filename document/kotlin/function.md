@@ -244,3 +244,23 @@ fun <T1,T2> generic_ex4(item: T1): T1 {
 // generic_ex4<String,Int>("Hello World") -> Hello World
 
 ```
+
+```kotlin
+// inline : 함수호출의 오버헤드가 함수수행보다 큰 경우 inline 사용
+// inline 함수는 사용된 위치에 컴파일러가 함수 코드를 넣는다고 생각하면 됨 (호출을 없앰)
+// kotlin에서 중요한 것은 매개변수로 들어온 함수, 람다식도 inline화 가능된다는 것이다
+/*
+
+inline function
+
+inline fun #FunctionName (...): #ReturnType {
+	...
+}
+
+매개변수에 inline을 원하지 않는 함수가 존재할 때
+inline fun #FunctionName (..., noinline #noinlineName: #FunctionType, ...): #ReturnType {
+	...
+}
+
+*/
+```
