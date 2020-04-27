@@ -249,6 +249,7 @@ fun <T1,T2> generic_ex4(item: T1): T1 {
 // inline : 함수호출의 오버헤드가 함수수행보다 큰 경우 inline 사용
 // inline 함수는 사용된 위치에 컴파일러가 함수 코드를 넣는다고 생각하면 됨 (호출을 없앰)
 // kotlin에서 중요한 것은 매개변수로 들어온 함수, 람다식도 inline화 가능된다는 것이다
+// inline의 또다른 장점은 매개변수로 받는 람다식에 return을 사용할 수 있다는 장점이 있다 (inline함수는 불린 위치에 코드가 들어간다고 생각하면 마음이 편하다)
 /*
 
 inline function
@@ -257,10 +258,20 @@ inline fun #FunctionName (...): #ReturnType {
 	...
 }
 
-매개변수에 inline을 원하지 않는 함수가 존재할 때
+noinline: 매개변수에 inline을 원하지 않는 함수가 존재할 때
+
 inline fun #FunctionName (..., noinline #noinlineName: #FunctionType, ...): #ReturnType {
 	...
 }
+
+crossinline: non-local flow를 쓰면 안되는 함수가 존재할 때(local object, nested function같은 경우)
+non-local flow: 함수가 불리는 space와 local space간의 flow가 그대로 흐른다 (그냥 코드가 그대로 들어가니깐 local flow가 없어진다라고 생각하면 편하다, 그래서 람다식에 return 사용가능)
+
+inline fun #FunctionName(..., crossline #noinlineName: #FunctionType, ...): #ReturnType {
+	...
+}
+
+Reified type paramaters
 
 */
 ```
