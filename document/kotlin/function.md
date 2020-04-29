@@ -275,3 +275,64 @@ Reified type paramaters
 
 */
 ```
+
+```kotlin
+/*
+
+Extension Function
+
+fun #VariableType.#FunctionName(...): #ReturnType {
+	...
+}
+
+*/
+
+fun String.extension_ex1(): String{
+	return "Hello, $this"
+}
+// "World".extension_ex1() -> "Hello, World"
+// 1.extension_ex1() -> ERROR
+
+fun MutableList<Int>.extension_ex2(x: Int, y: Int): MutableList<Int> {
+	val tmp = this[x]
+	this[x] = this[y]
+	this[y] = tmp
+    return this
+}
+// mutableListOf(1,2).extension_ex2(0,1) -> [2,1]
+
+/* Extension은 정적 처리, static final */
+
+open class A
+class B: A()
+fun A.foo() = "a"
+fun B.foo() = "b"
+fun extension_ex2(a: A) {
+    print(a.foo())
+}
+// extension_ex(B()) -> "a" , why? : It's static!
+
+/* Member method > Extension Function */ 
+
+class A {
+    fun myPrint() { print("Class method") }
+}
+fun A.myPrint() { print("Extension function") }
+// A().myPrint() -> "Class method"
+
+class A {
+    fun myPrint() { print("Class method") }
+}
+fun A.myPrint(x: Int) { print("Extension function") }
+// A(1).myPrint() -> "Extension function" why? : overload OK
+
+/* Nullable receiver */
+fun Any?.extension_ex4(): String {
+    if (this == null) return "It's null"
+    // after the null check, 'this' is autocast to a non-null type, so the toString() below
+    // resolves to the member function of the Any class
+    return toString()
+}
+// 1.extension_ex4() -> "1"
+// null.extension_ex4() -> "It's null"
+```
