@@ -25,9 +25,7 @@ class #ClassName constructor(...) {
 
 // constructor 생략가능
 class #ClassName(...) {
-  init {
-    ...
-  }
+  ...
 }
 ```
 
