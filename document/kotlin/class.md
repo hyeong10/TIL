@@ -3,68 +3,216 @@
 ## Class 선언
 
 ```kotlin
-class class이름(data: type){
+class #ClassName {
+  ...
 }
 ```
 
-- 헤더와 바디는 옵션
-
 ```kotlin
-class class이름
+class A
+
+class A {
+  ...
+}
 ```
 
 ## 기본 생성자
 
-- 클래스당 1개만 가능
-
 ```kotlin
-class class이름 constructor(data: type){
+class #ClassName constructor(...) {
+  ...
 }
-```
 
-- constructor는 생략가능 (어노테이션 접근지정자시 불가)
-
-
-```kotlin
-class class이름(data: type){
-}
-```
-
-- 생성자내에 쓰고싶은 코드는 init키워드사용
-- 기본생성자의 파라매터는 init 블록 안에서 사용가능!!
-
-```kotlin
-class class이름(data: type){
-  init{
-    logger.info("class 생성 확인 ${data}")
+// constructor 생략가능
+class #ClassName(...) {
+  init {
+    ...
   }
 }
 ```
 
-- 기본생성자는 초기화 선언에도 사용가능
-
 ```kotlin
-class class이름(data: type){
-  val parameter: type = data
+class A constructor() {
+}
+
+class A constructor(x: Int) {
+}
+
+class A() {
+}
+
+class A(x: Int, y: String) {
 }
 ```
 
-- 더 간결한 구문으로 초기화 가능
+```kotlin
+/* 
+parameter의 접두에 var나 val를 붙이면 property가 된다
+var는 mutable, val는 read-only
+*/
+class #ClassName (...
+  , var #VariableName: #VariableType
+  , ...
+  , val #ValueName : #ValueType,
+  ...) {
+  ...
+}
+```
 
 ```kotlin
-class class이름(val parameter: type){
+class A (x: Int, var y: Int, val z: Int)
+val a = A(1,2,3)
+// a.x  ->  ERROR
+// a.y  ->  2
+// a.z  ->  3
+// a.y = 1  =>  a.y  ->  1
+// a.z = 1  ->  ERROR
+```
+
+```kotlin
+class #ClassName (...) {
+  init {
+    ...
+  }
+  ...
 }
+```
+
+```kotlin
+class A {
+  init {
+    println("Creat A!!")
+  }
+}
+// A() -> "Creat A!!"
+
+class A(var x: Int) {
+  init {
+    x = 1
+  }
+}
+// A(2).x -> 1
+
+class A() {
+  init {
+    var x = 1
+  }
+}
+// A().x -> ERROR
+
+class A {
+  var x = 1
+  init {
+    x = 2
+  }
+}
+// A().x -> 2
+
+class A(x: Int) {
+  var x = 1
+  init {
+    this.x = x
+  }
+}
+// A(2).x = 1
 ```
 
 ## 보조생성자
 
-- 여러개 사용 가능
+```kotlin
+class #ClassName {
+  constructor() {
+    ...
+  }
+  ...
+}
+
+class #ClassName(...) {
+  ...
+  constructor(..., #Varibale: #VaiableType, ...): this(...) {
+    ...
+  }
+  ...
+}
+```
 
 ```kotlin
-class A{
-  constructor(a: A){
+class A {
+  constructor() {
+    println("Create A!!")
   }
 }
+// A() -> "Create A!!"
+
+class A {
+  constructor() {
+    println("Second!")
+  }
+  init {
+    print("Primary! ")
+  }
+}
+// A() -> "Primary! Second!"
+
+class A {
+  init {
+    print("I'm ")
+  }
+  constructor() {
+    print("1")
+  }
+  constructor(x: Int) {
+    print("2")
+  }
+  constructor(x: Int, y: String) {
+    print("3")
+  }
+  constructor(x: Int, y: Int) {
+    print("4")
+  }
+}
+// A() -> "I'm 1"
+// A(1) -> "I'm 2"
+// A(1,"Hello") -> "I'm 3"
+// A(1,2) -> "I'm 4"
+
+class A {
+  init {
+    print("He")
+  }
+  constructor() {
+    print("'s not called")
+  }
+  constructor(x: Int) {
+    print("ll")
+  }
+  constructor(x: Int,y: Int): this(x) {
+    print("o!")
+  }
+}
+// A(1,2) -> "Hello!"
+// A(1) -> "Hell"
+// A() -> "He's not called"
+
+class A {
+  var x: Int? = null
+  var y: String? = null
+  var z: String = ""
+  constructor() 
+  constructor(x: Int) {
+		this.x = x  
+  }
+  constructor(x: Int, y: String) : this(x) {
+    this.y = y
+  }
+  constructor(x: Int, y: String, z: String) : this(x,y) {
+    this.z = z
+  }
+}
+// A().x -> null
+// A(1).x -> 1
+// A(1,"1").x -> 1
+// A(1,"1","wow").y -> "1"
 ```
 
 
@@ -122,3 +270,6 @@ data class A (val B: type){
 - 보안(abstract,open,sealed,inner)등은 불일 수 없음
 - 상속불가
 
+
+// A().a -> 2
+```
