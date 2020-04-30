@@ -335,4 +335,19 @@ fun Any?.extension_ex4(): String {
 }
 // 1.extension_ex4() -> "1"
 // null.extension_ex4() -> "It's null"
+
+/* Scope */
+
+open class A
+class B {
+    init {
+        A().myPrint()
+    }
+    fun A.myPrint() {
+        println("A")
+    }
+}
+// A().myPrint() -> ERROR , why? : function A.myPrint()는 class B 내에서만 사용가능 
+// B() -> "A"
+
 ```
