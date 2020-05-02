@@ -115,6 +115,39 @@ class A(x: Int) {
 // A(2).x = 1
 ```
 
+## Default
+
+```kotlin
+class #ClassName(..., #VariableName: #VariableType = #DefaultValue, ...) {
+	...
+}
+```
+
+```kotlin
+class A(x: Int= 0) {
+	init {
+        	print(x)
+	}
+}
+// A() -> 0
+// A(1) -> 1
+
+class A(var x: Int = 0, val y: Int = 1) {
+	init {
+        	print(x)
+		print(y)
+	}
+}
+// A() -> 01
+// A(3) -> 31
+// A(1,2) -> 12
+// A(y=2) -> 02
+// A(y=2,x=1) -> 12
+// A(1,y=2) -> 12
+// A(2,x=1) -> ERROR, 순서는 중요!
+// Function의 Default와 비슷하니 Function의 Default 예제 참고
+```
+
 ## 보조생성자
 
 ```kotlin
@@ -211,19 +244,41 @@ class A {
 // A(1).x -> 1
 // A(1,"1").x -> 1
 // A(1,"1","wow").y -> "1"
-```
 
-
-```kotlin
-class A(val data: type){
-  constructor(data: type,a: A) : this(data){
-  // 직접적으로 A를 부른다
+class A(x: Int) {
+  constructor(x: Int, y: Int) : this(x) {
+    print(x+y)
   }
-  
-  constructor() : this(temp_data,A()){
-  // 간접적으로 위에 constructor를 부르고 이를 통해 A를 부른다
+  constructor(x: Int, y: String): this(x) {
+    print(x)
+    print(y)
+  }
+  constructor(x: Int, y: Int, z: Int): this(x,y) {
+   print(x+y+z)
   }
 }
+// A(1) -> 
+// A(1,2) -> 3
+// A(1,"2") -> 12
+// A(1,2,3) -> 6
+```
+
+```kotlin
+/* 단순하게 parameter나 property를 입력할때는 아래와 같이 더 자주 사용한다 */
+
+class A(x: Int, var y: Int = 0, val z: Int = 0)
+// A(1).y -> 0
+// A(1).z -> 0
+// A(1,2).y -> 2
+// A(1,2).z -> 0
+// A(1,z=2).y -> 0
+// A(1,z=2).z -> 2
+
+class A<T> (var x: T,val y: Int = 0)
+// A(1).x -> 1
+// A("Hello").x -> "Hello"
+// A(2,1).x -> 2
+// A("Hello",1).x -> "Hello"
 ```
 
 ## generated 생성자
