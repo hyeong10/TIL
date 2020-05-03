@@ -1,4 +1,4 @@
-# Kotlin #class
+# class
 
 ## Class 선언
 
@@ -283,28 +283,103 @@ class A<T> (var x: T,val y: Int = 0)
 
 ## generated 생성자
 
-- 생성자 선언을 하지않으면 기본적으로 generated 생성자
-- 별도의 지정이 없으면 public
-
 ```kotlin
-class A{
-// public
+// 생성자 선언을 하지않으면 generated 생성자가 만들어진다
+// 기본적으로 public이다
+class #ClassName {
+	...
 }
-```
 
-
-```kotlin
-class A private constructor(){
+// private한 class를 만들고 싶다면 아래와 같이 한다
+class #ClassName private constructor() {
+	...
 }
 ```
 
 ## 인스턴스 생성
 
-- 자바와 달리 new 키워드 없이 사용
+```kotlin
+var #InstanceName = #ClassName(...)
+
+val #InstanceName = #ClassName(...)
+```
+
+```kotlin
+// class A
+val a = A()
+var b = A()
+
+// class A(var x: Int)
+var a = A(1)
+val b = A(2)
+
+// class A(var x: Int, val y: String)
+val a = (1,"Hello")
+var b = (2,"World")
+```
+
+## Inheritance
+
+```kotlin
+open class #ParentClass(...)
+class #ChildClass(...): #ParentClass(...) {
+	...
+}
+```
 
 
 ```kotlin
-val instance = my_class()
+open class ParentA
+class A(x: Int): ParentA()
+
+open class ParentA(x: Int)
+class A(val x: Int): ParentA(x)
+
+open class ParentA(x: Int)
+class A: ParentA(x)
+// ERROR
+
+open class ParentA(x: Int = 0)
+class A: ParentA()
+
+open class ParentA(a: Int)
+class A(x: Int): ParentA(x)
+
+open class ParentA(x: String, var y: Int=0)
+class A(x: String): ParentA(x)
+// A("Hello").y -> 0
+
+class A: Any()
+// class A와 같다
+// Any는 Kotlin의 최상위 클래스로 자동으로 상속된다
+```
+
+## Override
+
+```kotlin
+open class #ParentClass (...) {
+	...
+	open fun #ParentFunction (...) {
+		...
+	}
+	...
+}
+class #ChildClass (...): #ParentClass {
+	...
+	override fun #ParentFunction (...) {
+		...
+	}
+	...
+}
+
+// 상속된 class의 자식들에게 fun의 overriding을 막고싶다면 final을 붙인다
+class #ChildClass (...): #ParentClass {
+	...
+	final override fun #ParentFunction (...) {
+		...
+	}
+	...
+}
 ```
 
 ## data class
