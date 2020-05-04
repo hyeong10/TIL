@@ -336,6 +336,10 @@ open class ParentA(x: Int)
 class A(val x: Int): ParentA(x)
 
 open class ParentA(x: Int)
+class A: ParentA()
+// ERROR
+
+open class ParentA(x: Int)
 class A: ParentA(x)
 // ERROR
 
@@ -345,6 +349,15 @@ class A: ParentA()
 open class ParentA(a: Int)
 class A(x: Int): ParentA(x)
 
+open class ParentA(var a: Int)
+class A(x: Int): ParentA(x)
+// A(1).x -> 1
+
+open class ParentA(var x: Int)
+class A(var x: Int): ParentA(x)
+// ERROR
+// x를 override하지 않았으므로 ERROR발생
+
 open class ParentA(x: String, var y: Int=0)
 class A(x: String): ParentA(x)
 // A("Hello").y -> 0
@@ -352,9 +365,30 @@ class A(x: String): ParentA(x)
 class A: Any()
 // class A와 같다
 // Any는 Kotlin의 최상위 클래스로 자동으로 상속된다
+
+
+open class ParentA() {
+	fun myPrint() {
+		print("Hello World")
+	}
+}
+class A: ParentA()
+// A().myPrint() -> "Hello World"
+
+open class ParentA(var x: Int){
+	fun myPrint() {
+		print(x)
+	}	
+}
+class A(x: Int): ParentA(x)
+// A(1).myPrint() -> 1
+
+
+// 자식 class는 부모 class의 초기화 되지않은 parameter를 전부 채울 필요가 있다
+// 물려받은 property와 method는 override하지않는다면 전적으로 부모의 것을 따른다
 ```
 
-## Override
+## Override method
 
 ```kotlin
 open class #ParentClass (...) {
@@ -381,6 +415,48 @@ class #ChildClass (...): #ParentClass {
 	...
 }
 ```
+
+```kotlin
+class ParentA {
+	open fun myPrint(){
+		print("Parent")
+	}
+}
+class A: ParentA {
+	override fun myPrint(){
+		print("Child")
+	}
+}
+// A().myPrint() -> "Child"
+
+class ParentA {
+	open fun myPrint(x: Int){
+		print("Parent")
+	}
+}
+class A: ParentA {
+	override fun myPrint(){
+		print("Child")
+	}
+}
+// A().myPrint() -> ERROR
+// override된 함수의 parameters는 맞춰야한다
+
+class ParentA {
+	open fun myPrint(){
+		print("Parent")
+	}
+}
+class A: ParentA {
+	override fun myPrint(){
+		super().myPrint()
+		print("Child")
+	}
+}
+// A().myPrint() -> "ParentChild"
+```
+
+
 
 ## data class
 
