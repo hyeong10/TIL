@@ -576,7 +576,7 @@ class A: ParentA() {
 	}
 }
 
-// A().Y() -> "Parent/nParentChild"
+// A().Y() -> "Parent/nChildParent"
 ```
 
 ## data class
