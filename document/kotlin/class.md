@@ -456,7 +456,128 @@ class A: ParentA {
 // A().myPrint() -> "ParentChild"
 ```
 
+## Overriding Properties
 
+```kotlin
+open class #ParentClass (open var #VariableName: #VariableType, ...)
+class #ChildClass (override var #VariableName: #VariableType, ...): #ParentClass(...)
+// Not recommeded
+
+open class #ParentClass (open val #ValueName: #ValueType, ...)
+class #ChildClass (override val #ValueName: #ValueType, ...): #ParentClass(...)
+// Not recommeded
+
+open class #ParentClass (...) {
+	oepn val #ValueName: #ValueType = #DefaultValue
+}
+class #ChildClass (...): ParentClass(...) {
+	oepn val #ValueName: #ValueType = #AnotherValue
+}
+
+open class #ParentClass (open var #VariableName: #VariableType, ...)
+class #ChildClass (...): ParentClass(...) {
+	open var #VariableName: #VariableType = #AnotherValue
+}
+```
+
+```kotlin
+open class ParentA (open var x: Int)
+class A(a: Int): ParentA(a) {
+	override var x: Int = a
+}
+
+open class ParentA (open var x: Int)
+class A(x: Int): ParentA(x) {
+	override var x: Int = x
+}
+// 위와 같다
+
+open class ParentA (open var x: Int)
+class A(x: Int): ParentA(x) {
+	override var x: Int = 2
+}
+// A(1).x -> 2
+
+open class ParentA {
+	open var x: Int = 0
+}
+class A: ParentA() {
+	override var x: Int = 2
+}
+// A().x -> 2
+
+open class ParentA {
+	open var x: Int = 0
+}
+class A(override var x: Int): ParentA()
+// A(2).x -> 2
+
+```
+
+## Derived class initialization order
+
+```kotlin
+open class Base(val name: String) {
+
+    init { println("Initializing Base") }
+
+    open val size: Int = 
+        name.length.also { println("Initializing size in Base: $it") }
+}
+
+class Derived(
+    name: String,
+    val lastName: String
+) : Base(name.capitalize().also { println("Argument for Base: $it") }) {
+
+    init { println("Initializing Derived") }
+
+    override val size: Int =
+        (super.size + lastName.length).also { println("Initializing size in Derived: $it") }
+}
+// 공식 kotlin 예시
+```
+
+```
+// Derived("hello", "world")
+Argument for Base: Hello
+Initializing Base
+Initializing size in Base: 5
+Initializing Derived
+Initializing size in Derived: 10
+```
+## Super
+
+```kotlin
+open class ParentA {
+	var x: Int = 0
+	open val y: String? = "Parent"
+	fun X() {
+		println("I'm Parent Func")
+	}
+	open fun Y() {
+		println(y)
+	}
+}
+
+class A: ParentA() {
+	// var x: Int = super.x  -> ERROR, If you want to use this Function, you have to override
+	override var y: String? = "Child"
+	/* 
+	fun X() {
+		super.X()
+		println("No! I'm Child Func")
+	}
+	ERROR, If you want to use this Function, you have to override
+	*/
+	override fun Y() {
+		super.Y()
+		println(y + super.y)
+	}
+}
+
+// A().Y() -> "Parent/nParentChild"
+```
 
 ## data class
 
