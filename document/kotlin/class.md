@@ -559,7 +559,6 @@ open class ParentA {
 		println(y)
 	}
 }
-
 class A: ParentA() {
 	// var x: Int = super.x  -> ERROR, If you want to use this Function, you have to override
 	override var y: String? = "Child"
@@ -575,7 +574,6 @@ class A: ParentA() {
 		println(y + super.y)
 	}
 }
-
 // A().Y() -> "Parent/nChildParent"
 ```
 
@@ -685,6 +683,54 @@ class A: IA2 {
 // A().a -> 0
 // A().b -> 0
 // A().c -> "H"
+
+
+/* Overriding Rule */
+
+/*
+이런짓 하지말것!! 
+open class PA1 {
+    var x: Int = 1
+    open var y: Int = 1
+    
+    fun A() {print("A1")}
+    open fun B() {print("B1")}
+}
+interface PA2 {
+    var x: Int
+    var y: Int
+    
+    fun A() {print("A2")}
+    fun B() {print("B2")}
+}
+class A: PA1, PA2(){
+	...
+}
+
+class A는 PA1과 PA2를 상속받는데 
+x와 A함수의 경우 PA2에 따라 반드시 override해줘야하나
+PA1에 x와 A함수가 open되어있지 않아 override하면 ERROR발생
+따라서 이러지도 못하고 저러지도 못해서 A 작성불가!!!
+*/
+
+// super 사용 확인!
+open class PA1 {
+    open var x: Int = 1
+    open fun X() {print("A1")}
+}
+interface PA2 {
+    var x: Int
+    fun X() {print("A2")}
+}
+class A: PA2, PA1(){
+    // override var x: Int , ERROR.
+    override var x: Int = 0
+    override fun X() {
+        super<PA1>.X()
+        super<PA2>.X()
+    }
+}
+// A().X() -> "A1A2"
 ```
 
 ## data class
