@@ -579,6 +579,92 @@ class A: ParentA() {
 // A().Y() -> "Parent/nChildParent"
 ```
 
+## Abstract
+
+```kotlin
+abstract class #ClassName(...) {
+	abstract var #VariableName: #VareiableType
+	abstract fun #FunctionName (...) {
+		...
+	}
+}
+```
+
+```kotlin
+abstract class AbstractA {
+	// abstract var x: Int = 0 , ERROR
+	abstract var x: Int
+	abstract fun X()
+}
+class A: AbstractA() {
+	// var x = 0 , ERROR
+	override var x = 1
+	// fun X() , ERROR
+	override fun X() {
+		print("Hello World")
+	}
+}
+
+
+open class ParentA {
+	var x: Int = 0
+	open val y: Int = 0
+	fun X() {println("PX")}
+	open fun Y() {println("PY")}
+}
+abstract class AbstractA: ParentA() {
+	// abstract var x: Int , ERROR
+	abstract override var y: Int
+	// abstract override var y: Int = 0 , ERROR. Default값은 설정할 수 없다
+	var z: Int = 1
+	// abstract fun X() , ERROR
+	abstract override fun Y()
+	// abstract override fun Y() {} , ERROR. Body는 비워야한다
+	fun Z() {println("AZ")}
+}
+class A: AbstractA() {
+	override var y: Int = 0
+    	override fun Y() {println("Y")}
+	// 반드릿 abtract멤버는 override해줘야한다
+}
+// A().X() -> "PA"
+// A().Y() -> "Y"
+// A().Z() -> "AZ"
+```
+
+## Interface
+
+```kotlin
+interface #InterfaceName {
+	var #VarialbeName: #VariableType
+	val #ValueName: #ValueType
+	fun #FunctionName(...) {
+		// optional, 쓰게되면 굳이 자식 class에서 override하지 않아도 된다
+	}
+}
+class #ClassName: #InterfaceName {
+	...
+}
+```
+
+```kotlin
+// interface InterfaceA() , ERROR. Interface는 contructor가 없다
+interface InterfaceA {
+	var x: Int
+	// var x: Int = 0 , ERROR
+	fun X() { print("OptionX") }
+	fun Y(x: Int)
+	fun Z(x: Int) { print("OptionZ") }
+}
+
+class A: InterfaceA {
+    override var x: Int = 0
+    override fun X() { super.X() }
+    override fun Y(x: Int) { print("Y") }
+}
+// 
+```
+
 ## data class
 
 - 데이터만 표현하기 위한 class
