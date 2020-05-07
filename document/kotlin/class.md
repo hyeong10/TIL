@@ -662,7 +662,29 @@ class A: InterfaceA {
     override fun X() { super.X() }
     override fun Y(x: Int) { print("Y") }
 }
-// 
+// A().X() -> "OptionX"
+// A().Y() -> "Y"
+// A().Z() -> "OptionZ"
+
+
+interface IA1 {
+    val a: Int
+    var b: Int
+}
+interface IA2: IA1 {
+    override val a: Int get() = 0
+    // override var a: Int get() = 0 , ERROR. Only Value do!
+    override var b: Int
+    var c: String
+}
+class A: IA2 {
+    // implemeting "a" is not required
+    override var b = 0
+    override var c = "H"
+}
+// A().a -> 0
+// A().b -> 0
+// A().c -> "H"
 ```
 
 ## data class
