@@ -19,6 +19,7 @@ val z: Int = 3
 ## Getter and Setter
 ```kotlin
 // "val"은 Read-Only기에 setter를 사용할 수 없다 
+// 'field'를 통해 parameter의 Backing field를 이용
 var #VariableName: #VariableType = #DefaultValue
     set(#ParameterName) {
         ...
@@ -86,9 +87,22 @@ var x = A()
 // x.f = 2 -> ERROR, val can't be resignned
 
 
+class A {
+    var x: Int = 0
+    val y: Int
+    get() {
+        x = 1
+        return 1
+    }
+}
+var a = A()
+print(a.x) // 0
+print(a.y) // 1
+print(a.x) // 1
+
 // Private Set
 class A {
-	  var a: Int = 0
+    var a: Int = 0
     private set
     var b: Int = 0
     private set(value) {
@@ -102,4 +116,14 @@ class A {
 // A().a = 2 -> ERROR
 
 
+// Backing Properties: ?? 솔직히 backing field를 사용하지 않는다는 것뿐 뭐가 다른지 모르겠음
+// kotlin 기본 예제
+private var _table: Map<String, Int>? = null
+public val table: Map<String, Int>
+    get() {
+        if (_table == null) {
+            _table = HashMap() // Type parameters are inferred
+        }
+        return _table ?: throw AssertionError("Set to null by another thread")
+    }
 ```
