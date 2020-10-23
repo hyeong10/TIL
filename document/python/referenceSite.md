@@ -1,1 +1,2 @@
 - 메모리 : https://leemoney93.tistory.com/25
+- GC : https://winterj.me/python-gc
