@@ -1,1 +1,1 @@
-- gc : https://d2.naver.com/helloworld/329631
+- gc : https://d2.naver.com/helloworld/329631, https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/
